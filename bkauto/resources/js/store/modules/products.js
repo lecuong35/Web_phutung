@@ -71,6 +71,14 @@ const actions = {
             console.log(err);
         });
     },
+
+    exportExcel() {
+        baseUrl.adminGet('products/export-excel').then( (result) => {
+            console.log(result);
+        }).catch (err => {
+            console.log(err);
+        })
+    }
 }
 
 export default {

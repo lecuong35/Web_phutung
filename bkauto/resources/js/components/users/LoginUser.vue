@@ -45,7 +45,7 @@ export default {
             errors: {}
         }
     },
-
+ 
     methods: {
        login(user) {
           baseUrl.userLogin('login',user).then((response) => {

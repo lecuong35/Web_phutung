@@ -105,6 +105,10 @@ const routes = [
         path: '/barchart',
         component: BarChartVue
     },
+    // {
+    //     name: 'export-excel ',
+    //     path: '/admin/products/export-excel',
+    // },
     
 ];
 

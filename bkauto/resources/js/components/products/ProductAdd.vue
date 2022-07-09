@@ -125,7 +125,6 @@ export default {
    methods: {
        addProduct() {
            const id = this.$route.params.postId;
-            // console.log(id);
            const dt = new FormData();
            dt.append('image', this.image);
            dt.append('describe', this.describe);
@@ -140,14 +139,15 @@ export default {
                   this.errors = err.response.data.errors;
                   console.log(this.errors)
         });
+           } else {
+                baseUrl.adminPost('products/create', dt).then(response => {
+                console.log(response);
+                router.push({name: 'product-manage'})
+                }).catch((err) => {
+                    this.errors = err.response.data.errors;
+                    console.log(this.errors)
+                });
            }
-           baseUrl.adminPost('products/create', dt).then(response => {
-               console.log(response);
-               router.push({name: 'product-manage'})
-           }).catch((err) => {
-               this.errors = err.response.data.errors;
-               console.log(this.errors)
-           });
        },
 
        getImage(event) {

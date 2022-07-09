@@ -48,6 +48,10 @@ const mutations = {
             const carts = state.carts.filter(cart => cart.bill_id === bill.id);
             bill.cartItems = carts;
         })
+    },
+
+    CONFIRM_BILL(state, id) {
+        state.bills = state.bills.filter(bill => bill.id !== id)
     }
 }
 
@@ -73,6 +77,15 @@ const actions = {
             console.log(err);
         });
     },
+
+    confirmBill({commit}, id) {
+        baseUrl.adminPostId('bills/confirm/', id).then( (result) => {
+            commit('CONFIRM_BILL', id);
+            window.history.go();
+        }).catch(err => {
+            console.log(err);
+        })
+    }
 }
 
 export default {

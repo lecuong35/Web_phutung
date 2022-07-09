@@ -11,7 +11,7 @@ class BillController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth:api', ['except' => ['index', 'destroy', 'history']]);
+        $this->middleware('auth:api', ['except' => ['index', 'destroy', 'history', 'confirm']]);
         $this->id = null;
         if(auth()->user() != null) { 
             $this->id = auth()->user()->id;
@@ -37,7 +37,7 @@ class BillController extends Controller
                 ->where('handled', '=', false)
                 ->where('status', '=', true)
                 ->leftJoin('users','bills.user_id', '=', 'users.id')
-                ->select('bills.*', 'users.name')
+                ->select('bills.*', 'users.name', 'users.phone')
                 ->get();
 
         return response()->json($bills);
@@ -149,6 +149,15 @@ class BillController extends Controller
                 ]);
     }
 
+    public function confirm($id) {
+        $this->middleware('auth:admin');
+        $bill = DB::table('bills')
+                ->where('id', '=', $id)
+                ->update([
+                    'handled' => true,
+                ]);
+    }
+
     /**
      * Remove the specified resource from storage.
      *
@@ -168,10 +177,67 @@ class BillController extends Controller
     //bill history 
     public function history() {
         $this->middleware('auth: admin');
-        $turnover = DB::table('bills')
-        ->whereMonth('updated_at', '=', 6)
-        ->get();
 
-        return response()->json(['massage' => $turnover]);
+        $turnover['jan'] = DB::table('bills')
+        ->where('handled', '=', true)
+        ->whereMonth('updated_at', '=', 1)
+        ->sum('total');
+
+        $turnover['feb'] = DB::table('bills')
+        ->where('handled', '=', true)
+        ->whereMonth('updated_at', '=', 2)
+        ->sum('total');
+
+        $turnover['mar'] = DB::table('bills')
+        ->where('handled', '=', true)
+        ->whereMonth('updated_at', '=', 3)
+        ->sum('total');
+
+        $turnover['apr'] = DB::table('bills')
+        ->where('handled', '=', true)
+        ->whereMonth('updated_at', '=', 4)
+        ->sum('total');
+
+        $turnover['may'] = DB::table('bills')
+        ->where('handled', '=', true)
+        ->whereMonth('updated_at', '=', 5)
+        ->sum('total');
+
+        $turnover['jun'] = DB::table('bills')
+        ->where('handled', '=', true)
+        ->whereMonth('updated_at', '=', 6)
+        ->sum('total');
+
+        $turnover['jul'] = DB::table('bills')
+        ->where('handled', '=', true)
+        ->whereMonth('updated_at', '=', 7)
+        ->sum('total');
+
+        $turnover['aug'] = DB::table('bills')
+        ->where('handled', '=', true)
+        ->whereMonth('updated_at', '=', 8)
+        ->sum('total');
+
+        $turnover['sep'] = DB::table('bills')
+        ->where('handled', '=', true)
+        ->whereMonth('updated_at', '=', 9)
+        ->sum('total');
+
+        $turnover['oct'] = DB::table('bills')
+        ->where('handled', '=', true)
+        ->whereMonth('updated_at', '=', 10)
+        ->sum('total');
+
+        $turnover['nov'] = DB::table('bills')
+        ->where('handled', '=', true)
+        ->whereMonth('updated_at', '=', 11)
+        ->sum('total');
+
+        $turnover['dec'] = DB::table('bills')
+        ->where('handled', '=', true)
+        ->whereMonth('updated_at', '=', 12)
+        ->sum('total');
+
+        return $turnover;
     }
 }

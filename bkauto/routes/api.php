@@ -82,6 +82,7 @@ Route::prefix('admin')->group( function () {
         Route::get('index', [BillController::class, 'index']);
         Route::delete('delete-bill/{id}', [BillController::class, 'destroy']);
         Route::get('turnover', [BillController::class, 'history']);
+        Route::post('confirm/{id}', [BillController::class, 'confirm']);
     });
 
     //cartForBill

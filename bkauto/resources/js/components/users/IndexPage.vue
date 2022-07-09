@@ -138,9 +138,9 @@
                                 <p>
                                     <b>Tên sản phẩm: </b> {{pro.name}}
                                 </p>
-                                <p>
+                                <!-- <p>
                                     <b>Miêu tả: </b> {{pro.describe}}
-                                </p>
+                                </p> -->
                                 <p>
                                     <b>Giá tiền: </b>{{pro.price}} vnđ
                                 </p>
@@ -486,6 +486,15 @@ export default {
         width: 90%;
         margin-left: 5%;
         text-align: center;
+
+        .products {
+
+            .products__item{
+                .products__info {
+                    text-align: start;
+                }
+            }
+        }
     }
 
     .footer{

@@ -185,6 +185,6 @@ class ProductController extends Controller
     // xuat file bao gia
     public function exportIntoExcel()
     {
-        return Excel::download(new ProductExport, 'bangbaogiaBKAuto.xlsx');
+        return Excel::download(new ProductExport, 'bangbaogia.xlsx');
     }
 }

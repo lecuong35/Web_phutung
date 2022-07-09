@@ -100,6 +100,13 @@ export default {
         );
     },
 
+    adminPostId(url, id) 
+    {
+        return axios.post(URL_admin + url + id,
+        { headers: this.getAdminHeader() }
+        );
+    },
+
     // update products, types
     adminPostHasId(url, id, data) 
     {

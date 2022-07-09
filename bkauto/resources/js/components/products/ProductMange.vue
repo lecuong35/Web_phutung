@@ -10,7 +10,13 @@
                   <button type="button" class="btn btn-outline-primary">search</button>
                 </div>
                 <div class="add-item col-lg-4 col-sm-12">
-                  <button class="btn btn-primary" @click="goToAdd">Add Products</button>
+                  <button class="btn btn-primary" @click="goToAdd">Thêm sản phẩm</button>
+                  <button class="btn btn-info" @click="exportExcel">
+                    <a href="http://127.0.0.1:8000/api/admin/products/export-excel" 
+                    target="__blank"
+                    style="text-decoration: none; color: #fafafa;">
+                    Xuất file báo giá</a>
+                  </button>
                 </div>
             </div>
             <hr>
@@ -61,7 +67,7 @@
 <script>
 import LeftBarVue from '../admin/layouts/LeftBar.vue'
 // import baseUrl from '../../store/baseUrl'
-import {  mapGetters, mapMutations, useStore } from 'vuex';
+import {  mapActions, mapGetters, mapMutations, useStore } from 'vuex';
 import {  computed } from 'vue';
 import router from '../../router';
 import baseUrl from '../../store/baseUrl';
@@ -95,9 +101,9 @@ export default {
     },
 
     methods: {
-        // ...mapActions({
-        //   deleteProduct: 'products/deleteProduct'
-        // }),
+        ...mapActions({
+          exportExcel: 'products/exportExcel'
+        }),
 
         getImage(src){
           return "storage/images/products/"+src;
@@ -109,7 +115,9 @@ export default {
 
         goToUpdate(id) {
            router.push({name: 'product-add', params: {postId : id} });
-        }
+        },
+
+
     }
     
 }

@@ -154,9 +154,9 @@ const actions = {
             baseUrl.userPostHasId('carts/create/', id);
             router.push({name: 'index'});
         } else 
-           router.push({name: login-user});
+           router.push({name: 'login-user'});
     }
-}
+} 
 
 export default {
     namespaced: true,

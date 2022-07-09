@@ -15,57 +15,121 @@
                 <div class="container">
                   <h2>Quản Lý Đơn Hàng</h2>
                     <!--Table-->
-<table class="table table-hover table-fixed">
+                    <table class="table table-hover table-fixed">
 
-  <!--Table head-->
-  <thead>
-    <tr>
-      <th>Id</th>
-      <th>Tên Người Dùng</th>
-      <th>Thời gian nhận</th>
-      <th>Địa chỉ</th>
-      <th>Items</th>
-      <th>Giá trị đơn hàng</th>
-    </tr>
-  </thead>
-  <!--Table head-->
+                      <!--Table head-->
+                      <thead>
+                        <tr>
+                          <th>Id</th>
+                          <th>Tên Người Dùng</th>
+                          <!-- <th>Số điện thoại</th> -->
+                          <th>Thời gian nhận</th>
+                          <!-- <th>Địa chỉ</th>
+                          <th>Items</th> -->
+                          <th>Giá trị đơn hàng</th>
+                          <th>Trạng thái</th>
+                          <th>Hành động</th>
+                        </tr>
+                      </thead>
+                      <!--Table head-->
 
-  <!--Table body-->
-  <tbody>
-    <tr v-for="bill in bills" :key="bill.id">
-      <th scope="row">{{bill.id}}</th>
-      <td>{{bill.name}}</td>
-      <td>{{bill.able_receive}}</td>
-      <td>{{bill.address}}</td>
-      <td >
-        <p v-for="item in bill.cartItems" :key="item.id">{{item.name}} -- SL:{{item.quantity}} </p> 
-        </td> 
-      <td>
-        {{bill.total}}
-      </td>
-    </tr>
-  </tbody>
-  <!--Table body-->
+                      <!--Table body-->
+                      <tbody>
+                        <tr v-for="bill in bills" :key="bill.id">
+                          <th scope="row">{{bill.id}}</th>
+                          <td>{{bill.name}}</td>
+                          <!-- <td>{{bill.phone}}</td> -->
+                          <td>{{bill.able_receive}}</td>
+                          <!-- <td>{{bill.address}}</td>
+                          <td >
+                            <p v-for="item in bill.cartItems" :key="item.id">{{item.name}} -- SL:{{item.quantity}} </p> 
+                            </td>  -->
+                          <td>
+                            {{bill.total}}
+                          </td>
+                          <td>
+                            {{bill.handled}}
+                          </td>
+                          <td>
+                            <button class="btn btn-success" @click="confirmBill(bill.id)">Xác Nhận</button>
+                            <div>
+                                   <button type="button" class="btn btn-primary" data-toggle="modal" :data-target="'#exampleModal'+bill.id">
+                                        Xem chi tiết
+                                    </button>
+                                        <!-- Modal -->
+                                        <div class="modal fade" :id="'exampleModal'+bill.id" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="exampleModalLabel">Chi tiết đơn hàng</h5>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    
+                                                    <p>
+                                                      <b>Tên khách: </b>{{bill.name}}
+                                                    </p>
+                                                   <p>
+                                                      <b>SĐT: </b>{{bill.phone}}
+                                                    </p>
+                                                    <p>
+                                                      <b>Thời gian nhận: </b>{{bill.able_receive}}
+                                                    </p>
+                                                    <p>
+                                                      <b>Địa chỉ: </b>{{bill.address}}
+                                                    </p>
+                                                    <p>
+                                                      <b>Items: </b><p v-for="item in bill.cartItems" :key="item.id">{{item.name}} -- Số Lượng: {{item.quantity}} </p> 
+                                                    </p>
+                                                    <p>
+                                                      <b>Tổng : </b>{{bill.total}}
+                                                    </p>
+                                                    
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                    <button type="button" class="btn btn-primary" @click="confirmBill(bill.id)">
+                                                        Xác nhận
+                                                    </button>
+                                                </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                            </div>
+                          </td>
+                        </tr>
+                      </tbody>
+                      <!--Table body-->
 
-</table>
-<!--Table-->
+                    </table>
                 </div>
             </div>
         </div>
+        <hr style="color: black;">
+        <h2 class="barchart">
+          DOANH THU TRONG NĂM</h2>
+        <BarChartVue class="barchart"/>
     </div>
+
+
+    <!-- <BarChartVue class="barchart"/> -->
+    
 </template>
 
 <script>
 import LeftBarVue from '../admin/layouts/LeftBar.vue'
+import BarChartVue from '../admin/BarChart.vue'
 // import baseUrl from '../../store/baseUrl'
-import {  mapGetters, mapMutations, useStore } from 'vuex';
+import {  mapActions, mapGetters, mapMutations, useStore } from 'vuex';
 import {  computed } from 'vue';
 import router from '../../router';
 import baseUrl from '../../store/baseUrl';
 export default {
     name: 'product-manage',
 
-    components: { LeftBarVue },
+    components: { LeftBarVue, BarChartVue },
     created: baseUrl.checkAdminLogin,
 
     setup() {
@@ -97,7 +161,11 @@ export default {
          carts.forEach(cart => {
            return cart.name + " - " + cart.quantity;
          });
-      }
+      },
+
+      ...mapActions({
+        confirmBill : 'bills/confirmBill'
+      })
     }
     
 }
@@ -106,6 +174,7 @@ export default {
 <style scoped lang="scss">
     .wrapper { 
         display: flex;
+        flex-direction: column;
     }
     
     .leftbarvue{ 
@@ -138,6 +207,11 @@ export default {
         border: solid 1px rgb(16, 16, 211);
         width: 75%;
         height: 100%;
+    }
+
+    .barchart{
+      position: relative;
+      left: 40%;
     }
 
     @media (max-width: 768px) {

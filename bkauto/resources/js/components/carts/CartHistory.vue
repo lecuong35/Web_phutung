@@ -10,7 +10,7 @@
                   <button type="button" class="btn btn-outline-primary">search</button>
                 </div>
                 <div class="add-item col-lg-4 col-sm-12">
-                  <button class="btn btn-primary">Quay lại trang chủ</button>
+                  <button class="btn btn-primary" @click="backToIndex">Quay lại trang chủ</button>
                 </div>
             </div>
             <hr>
@@ -98,6 +98,10 @@ export default {
       getImage(src){
           return "storage/images/products/"+src;
         },
+
+      backToIndex() {
+        router.push({name: 'index'});
+      },
     }
 }
 </script>
