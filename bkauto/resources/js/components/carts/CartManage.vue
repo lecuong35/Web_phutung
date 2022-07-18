@@ -84,16 +84,18 @@
               <div class="form-group">
                <label for="address">Địa chỉ</label>
                <div>
-                <input type="text" class="form-control is-invalid" id="address" aria-describedby="emailHelp"
-                v-model="info.address">
-                <p class="invalid-feedback">hello</p>
+                <input type="text" class="form-control" id="address" 
+                :class="{'is-invalid' : errors.address}"  aria-describedby="emailHelp"
+                v-model="info.address" required>
+                <p class="invalid-feedback">{{errors.address}}</p>
                </div>
            </div>
            <div class="form-group">
                <label for="address">Thời gian nhận</label>
                <div>
-                <input type="date" class="form-control is-invalid" id="address" aria-describedby="emailHelp" v-model="info.able_receive">
-                <p class="invalid-feedback">hello</p>
+                <input type="date" class="form-control" :class="{'is-invalid' : errors.able_receive}" 
+                id="address" aria-describedby="emailHelp" v-model="info.able_receive" required>
+                <p class="invalid-feedback">{{errors.able_receive}}</p>
                </div>
            </div>
            <div>
@@ -145,7 +147,8 @@ export default {
            address: '',
            able_receive: '',
            total: 0
-        }
+        },
+        errors: {}
       }
     },
 
@@ -173,9 +176,9 @@ export default {
 
       orderBill(info) {
         info.total = this.sum;
-        this.order(info);
+        this.order(info, this.errors);
         this.updateCart();
-        router.push({name: 'cart-manage'});
+        router.push({name: 'cart-history'});
       },
 
       getImage(src){

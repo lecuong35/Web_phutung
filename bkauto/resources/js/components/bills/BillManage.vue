@@ -90,7 +90,7 @@
                                                 </div>
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                    <button type="button" class="btn btn-primary" @click="confirmBill(bill.id)">
+                                                    <button type="button" class="btn btn-success" @click="confirmBill(bill.id)">
                                                         Xác nhận
                                                     </button>
                                                 </div>
@@ -108,7 +108,7 @@
             </div>
         </div>
         <hr style="color: black;">
-        <h2 class="barchart">
+        <h2 class="barchart" id="barchart123">
           DOANH THU TRONG NĂM</h2>
         <BarChartVue class="barchart"/>
     </div>

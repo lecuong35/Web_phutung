@@ -56,6 +56,7 @@ export default {
         }).catch((err) => {
             this.errors = err.response.data.errors;
            console.log(this.errors)
+           window.alert("Sai tài khoản hoặc mật khẩu")
         });
        }
     },

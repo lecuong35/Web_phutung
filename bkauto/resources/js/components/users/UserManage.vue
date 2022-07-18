@@ -72,6 +72,7 @@ import HeaderUserVue from './HeaderUser.vue';
 import { mapActions, mapGetters, mapState, useStore } from 'vuex'
 import baseUrl from '../../store/baseUrl'
 import { computed, onMounted } from 'vue';
+import router from '../../router';
 // import { onMounted } from 'vue'
 export default {
    name: 'users',
@@ -110,13 +111,10 @@ export default {
    methods: {
       update(user) {
            window.confirm("Ban co muon sua thong tin ?")
-            baseUrl.userPost('update', user).then((response) => {
-                var newUser = response.data;
-                commit('SET_USER', newUser);
-                router.push({name: 'login-user'})
+            baseUrl.userPost('update', user).then((result) => {
+                router.push({name: 'login-user'});
             }).catch((err) => {
-                this.errors = err.response.data.errors;
-                console.log(this.errors)
+                window.alert("Không thành công !");
             });
        }
    }

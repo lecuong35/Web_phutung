@@ -80,7 +80,7 @@ const actions = {
 
     confirmBill({commit}, id) {
         baseUrl.adminPostId('bills/confirm/', id).then( (result) => {
-            commit('CONFIRM_BILL', id);
+            // commit('CONFIRM_BILL', id);
             window.history.go();
         }).catch(err => {
             console.log(err);

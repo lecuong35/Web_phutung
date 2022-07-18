@@ -3,6 +3,7 @@ import router from '../../router'
 import { proxyRefs, pushScopeId } from "vue";
 import Vue from 'vue';
 import ls from 'localstorage-slim';
+import { conditionalExpression } from "@babel/types";
 
 const state = {
     carts: [],
@@ -72,6 +73,7 @@ const mutations = {
     },
 
     SEARCH_CART(state, id){
+        state.carts = state.cartsOrigin;
         if(id != '') {
             state.carts = state.carts.filter(cart => cart.id == id); 
         }
@@ -79,6 +81,7 @@ const mutations = {
     },
 
     SEARCH_CART_HISTORY(state, id){
+        state.cartsHistory = state.cartsHistoryOrigin;
         if(id != '') {
             state.cartsHistory = state.cartsHistory.filter(cart => cart.id == id); 
         }
@@ -128,7 +131,7 @@ const actions = {
     },
 
     deleteCart({commit}, id) {
-        window.confirm("Bạn có muốn xóa sản phẩm này khỏi giỏ hàng không ?")
+        window.confirm("Bạn có muốn xóa sản phẩm này khỏi giỏ hàng không ?");
         baseUrl.userDelete('carts/delete/', id);
         this.getCarts;
         window.history.go();
@@ -138,14 +141,20 @@ const actions = {
         state.carts.map(cart => {
             console.log(cart.changed)
             if(cart.selected == true) {
-                baseUrl.userPostHasId('carts/update/', cart.id, {quantity: cart.quantity})
+                baseUrl.userPostHasId('carts/update/', cart.id, {quantity: cart.quantity});
             }
         })
     },
 
-    orderBill({state}, info) {
+    orderBill({state}, info, err) {
         const sum = state.sum_price;
-        baseUrl.userPost('bills/update', info)
+        baseUrl.userPost('bills/update', info).then((result) => {
+            console.log(result);
+            err = null;
+        }).catch(errors => {
+            err = errors;
+            console.log(errors);
+        })
     },
 
     addCart({commit}, id){
@@ -153,6 +162,7 @@ const actions = {
         if(token != null){
             baseUrl.userPostHasId('carts/create/', id);
             router.push({name: 'index'});
+            window.alert("Đã thêm vào giỏ");
         } else 
            router.push({name: 'login-user'});
     }

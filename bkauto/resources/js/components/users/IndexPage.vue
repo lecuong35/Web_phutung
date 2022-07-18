@@ -30,7 +30,7 @@
                             <div class="dropdown-menu login__account" v-if="login" v-for="cus in user" :key="cus.id">
                                 <p>Xin chào {{cus.name}} </p>
                                 <p>
-                                    <router-link to="/manage-user">Quản lý tài khoản</router-link>
+                                    <router-link to="/cart-manage">Quản lý tài khoản</router-link>
                                 </p>
                                 <button class="btn btn-warning"
                                 @click="logout">
@@ -331,7 +331,7 @@ export default {
                 }
 
                 .header__contact{
-                    display: flex;
+                    display: none;
                     justify-content: space-between;
                     a{
                         display: flex;
@@ -521,6 +521,13 @@ export default {
             .info{
                 padding: 10px 20px 10px;
             }
+        }
+    }
+
+    @media screen and (max-width: 576px) {
+        .header__contact {
+            display: none;
+            color: #000;
         }
     }
 </style>

@@ -51,7 +51,8 @@ export default {
             router.push({name: 'product-manage'});
         }).catch((err) => {
             this.errors = err.response.data.errors;
-           console.log(this.errors)
+           console.log(this.errors);
+           window.alert("Sai tài khoản hoặc mật khẩu")
         });
        }
     },
