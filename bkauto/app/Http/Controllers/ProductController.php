@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Exports\ProductExport;
 use App\Http\Requests\AddProductRequest;
+use App\Imports\ProductsImport;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -186,5 +187,11 @@ class ProductController extends Controller
     public function exportIntoExcel()
     {
         return Excel::download(new ProductExport, 'bangbaogia.xlsx');
+    }
+
+    public function importExcelFile(Request $request) 
+    {
+        Excel::import(new ProductsImport, $request->file);
+        return response()->json(['message' => 'ok']);
     }
 }

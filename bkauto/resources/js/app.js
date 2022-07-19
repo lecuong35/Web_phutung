@@ -17,6 +17,7 @@ import router from "./router/index";
 // Vuex Store
 import store from "./store/index";
 
+import Vue3Html2pdf from 'vue3-html2pdf'
 // Initial Setup -> You can emit an actions from store to load the data
 
 // root app instance
@@ -25,6 +26,6 @@ const app = Vue.createApp(App);
 // app.component('todos', require('./components/TodoComponent.vue').default)
 
 // Mountin an app
-app.component('fa', FontAwesomeIcon).use(store).use(router).mount("#app");
+app.component('fa', FontAwesomeIcon).use(store).use(router).use(Vue3Html2pdf).mount("#app");
 
 

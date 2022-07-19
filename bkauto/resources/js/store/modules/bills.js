@@ -60,7 +60,8 @@ const actions = {
         baseUrl.adminGet('bills/index').then((result) => {
             var bills = result.data; 
             bills.forEach(bill => {
-                bill.cartItems = []
+                bill.cartItems = [],
+                bill.index = bills.indexOf(bill);
             });
             commit('SET_BILLS', bills)
         }).catch((err) => {

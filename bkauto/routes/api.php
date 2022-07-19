@@ -67,6 +67,7 @@ Route::prefix('admin')->group( function () {
         Route::post('update/{id}', [ProductController::class, 'update']);
         // Route::delete('delete/{id}', [ProductController::class, 'destroy']);
         Route::get('export-excel', [ProductController::class, 'exportIntoExcel']);
+        Route::post('import-excel', [ProductController::class, 'importExcelFile']);
     });
 
     // type curd

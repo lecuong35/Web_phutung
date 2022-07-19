@@ -15,7 +15,7 @@
                     <div class="input">
                         <input type="text" id="admin_email" 
                     class=" form-control" :class="{'is-invalid' : errors.email}" 
-                    :placeholder="origin_email"
+                    :placeholder= "origin_email"
                     v-model="admin.email">
                      <div class="invalid-feedback">
                         {{errors.email}}
@@ -41,7 +41,7 @@
                     <div class="input">
                         <input type="text" id="admin_facebook" 
                     class=" form-control" :class="{'is-invalid' : errors.facebook}" 
-                    :placeholder="origin_facebook"
+                    :placeholder= "origin_facebook"
                     v-model="admin.facebook">
                      <div class="invalid-feedback">
                         {{errors.facebook}}
@@ -54,7 +54,7 @@
                     <div class="input">
                         <input type="text" id="admin_bank" 
                     class=" form-control" :class="{'is-invalid' : errors.bank}" 
-                    :placeholder="origin_bank"
+                    :placeholder= "origin_bank"
                     v-model="admin.bank">
                      <div class="invalid-feedback">
                         {{errors.bank}}
@@ -67,7 +67,7 @@
                     <div class="input">
                         <input type="text" id="admin_phone" 
                         class=" form-control" :class="{'is-invalid' : errors.phone}" 
-                        :placeholder="origin_phone"
+                        :placeholder= "origin_phone"
                         v-model="admin.phone">
                      <div class="invalid-feedback">
                         {{errors.phone}}

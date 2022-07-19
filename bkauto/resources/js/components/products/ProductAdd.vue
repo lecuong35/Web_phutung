@@ -6,7 +6,11 @@
                 <LeftBarVue />
             </div>
                
-            <div class="form_info">
+            <div class="form_info" style="flex-direction:column;">
+                <form @submit.prevent="importExcel()" style="margin-bottom:20px;">
+                    <input type="file" name="file"  @change="getFile($event)" required>
+                    <button class="btn btn-success" type="submit">Thêm từ file Excel</button>
+                </form>
              <form @submit.prevent="addProduct" id="formdata">
                   <!-- @submit.prevent="addProduct(product)" -->
                 <h2>PRODUCT INFOMATION</h2>
@@ -107,6 +111,7 @@ export default {
             selected: '',
 
             errors: {},
+            file: null,
            
        }
    },
@@ -142,7 +147,7 @@ export default {
            } else {
                 baseUrl.adminPost('products/create', dt).then(response => {
                 console.log(response);
-                router.push({name: 'product-manage'})
+                router.push({name: 'product-manage'});
                 }).catch((err) => {
                     this.errors = err.response.data.errors;
                     console.log(this.errors)
@@ -153,7 +158,24 @@ export default {
        getImage(event) {
            this.image = event.target.files[0];
            console.log(this.image);
-       }
+       },
+
+       importExcel() {
+            const dt = new FormData();
+           dt.append('file', this.file);
+           baseUrl.adminPost('products/import-excel', dt).then(result => {
+                console.log(result);
+                window.alert("Đã thêm thành công!");
+                router.push({name: 'product-manage'});
+           }).catch(err => {
+                console.log(err);
+           })
+       },
+
+       getFile(event) {
+           this.file = event.target.files[0];
+           console.log(this.file);
+       },
    }
 }
 </script>

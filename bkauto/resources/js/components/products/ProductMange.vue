@@ -102,7 +102,7 @@ export default {
 
     methods: {
         ...mapActions({
-          exportExcel: 'products/exportExcel'
+          exportExcel: 'products/exportExcel',
         }),
 
         getImage(src){

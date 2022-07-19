@@ -78,6 +78,14 @@ const actions = {
         }).catch (err => {
             console.log(err);
         })
+    }, 
+
+    importExcel(file) {
+        baseUrl.adminPost('products/import-excel', file).then( (result) => {
+            console.log(result.data);
+        }).catch( (err) => {
+            console.log(err);
+        })
     }
 }
 

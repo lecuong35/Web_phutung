@@ -14,6 +14,8 @@
         "axios": "^0.27.2",
         "bootstrap": "^4.6.1",
         "cross-env": "^7.0",
+        "html2canvas": "^1.4.1",
+        "jspdf": "^2.5.1",
         "laravel-mix": "^6.0.43",
         "lodash": "^4.17.19",
         "resolve-url-loader": "^3.1.0",
@@ -32,7 +34,9 @@
         "popper.js": "^1.16.1",
         "vue": "^3.2.33",
         "vue-chartjs": "^4.1.1",
+        "vue-html2pdf": "^1.8.0",
         "vue-router": "^4.0.15",
+        "vue3-html2pdf": "^1.1.2",
         "vuex": "^4.0.2"
     }
 }
