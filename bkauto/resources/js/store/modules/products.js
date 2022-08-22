@@ -3,7 +3,9 @@ import router from '../../router'
 
 const state = {
     products: [],
-    productsOrigin: []
+    productsOrigin: [],
+    perPage: 12,
+    pages: [],
 }
 
 const getters = {
@@ -13,12 +15,21 @@ const getters = {
         if(product.id === id) return product.name;
     }),
     searchProduct:state => productName => state.products.filter(product => product.name.includes(productName)),
+    perPage:state => state.perPage,
+    pages:state=> state.pages,
+    numberOfPages:state => state.pages.length
 }
 
 const mutations = {
     SET_PRODUCTS(state, products) {
         state.products = products; 
         state.productsOrigin = products;
+
+        const numOfPages = Math.ceil(state.products.length/state.perPage);
+        for(var i = 0; i < numOfPages; i++) {
+            state.pages.push(i+1);
+        }
+        console.log(state.pages);
     },
 
     ADD_PRODUCT(state, product){
@@ -65,7 +76,7 @@ const actions = {
     getProducts({commit}) {
         baseUrl.adminGet('products/index').then((result) => {
             var products = result.data;
-            console.log(products);
+            // console.log(products);
             commit('SET_PRODUCTS', products);
         }).catch((err) => {
             console.log(err);

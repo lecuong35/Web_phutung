@@ -27,8 +27,8 @@
                             <a class="nav-link" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <fa icon="user" style="color: #fafafa;"/>
                             </a>
-                            <div class="dropdown-menu login__account" v-if="login" v-for="cus in user" :key="cus.id">
-                                <p>Xin chào {{cus.name}} </p>
+                            <div class="dropdown-menu login__account" v-if="login">
+                                <p>Xin chào {{user.name}} </p>
                                 <p>
                                     <router-link to="/cart-manage">Quản lý tài khoản</router-link>
                                 </p>
@@ -130,7 +130,7 @@
                 </h2> 
                 <div class="products">
                     <div class="products__item row">
-                        <p v-for="pro in products" :key="pro.id"
+                        <p v-for="pro in displayedPosts" :key="pro.id"
                          class="col-sm-6 col-md-4 col-lg-3">
                             <img :src="getImage(pro.image)" style="width: 75%; height: 45%">
                             <hr style="color: #000; width: 90%">
@@ -187,6 +187,22 @@
                             
                         </p>
                     </div>
+                     <nav aria-label="Page navigation example">
+                        <ul class="pagination">
+                            <li class="page-item">
+                                <button type="button" class="page-link" v-if="page != 1" @click="page--"> Previous </button>
+                            </li>
+                            <li class="page-item">
+                                <button type="button" class="page-link" 
+                                v-for="pageNumber in pages.slice(page-1, page)" @click="page = pageNumber"> {{pageNumber}} </button>
+                                <!-- @click="page = pageNumber" -->
+                            </li>
+                            <li class="page-item">
+                                <button type="button" class="page-link"
+                                @click="page++" v-if="numberOfPages > page"> Next </button>
+                            </li>
+                        </ul>
+                    </nav>	
                 </div>
 
             </div>
@@ -208,6 +224,7 @@
                             <p>Địa chỉ: 19 - ngách 105 - ngõ 325 - kim ngưu - thanh lương - hai bà trưng - hà nội</p>
                         </a>
                         <a href="" onclick="return false">
+                        <!-- onclick="return false" -->
                                 <fa icon="phone" style="padding-top:5px; margin-right: 15px"/>
                                 SDT: 0936247421
                         </a>
@@ -230,14 +247,17 @@
 import { mapMutations, mapGetters, useStore, mapActions } from 'vuex';
 import {  computed } from 'vue'; 
 import ls from 'localstorage-slim';
+import { assertTSTypeParameterInstantiation } from '@babel/types';
 
 export default {
    setup() {
         const store = useStore();
         const source = computed( () => store.getters['page/source']);
-        store.dispatch('products/getProducts')
+        store.dispatch('products/getProducts');
         const products = computed( () => store.getters['products/products']);
-
+        const pages = computed( () => store.getters['products/pages']);
+        const perPage = computed( () => store.getters['products/perPage']);
+        const numberOfPages = computed( () => store.getters['products/numberOfPages']);
         const user = ls.get('user');
         const login = user != null ? true:false;
 
@@ -245,22 +265,34 @@ export default {
             source,
             login,
             user,
-            products
+            products,
+            pages,
+            perPage,
+            numberOfPages
+
         }
+
    },
     data() {
       return {
         search: '',
         // products: this.products
+        page: 1,
+        pagepage: [1,2,3,4,5]
       }
     },
 
     watch: {
       ...mapMutations({
          search: 'products/SEARCH_PRODUCT'
-      })
-       
+      }),
     },
+
+	computed: {
+		displayedPosts() {
+			return this.paginate(this.products);
+		},
+	},
 
     methods: {
         ...mapMutations({
@@ -274,7 +306,6 @@ export default {
             searchByBrand: 'products/SEARCH_BY_BRAND',
             searchByType: 'products/SEARCH_BY_TYPE',
             restore: 'products/RESTORE',
-
         }),
 
         getImage(src){
@@ -284,12 +315,22 @@ export default {
         ...mapActions({
             logout: 'users/logout',
             addToCart: 'carts/addCart'
-        })
+        }),
 
-        // getSrc() {
-
-        // }
-    }
+        // setPages () {
+		// 	let numberOfPages = Math.ceil(this.products.length / this.perPage);
+		// 	for (let index = 1; index <= numberOfPages; index++) {
+		// 		this.pages.push(index);
+		// 	}
+		// },
+		paginate (pagi) {
+			let page = this.page;
+			let eachPage = this.perPage;
+			let from = (page * eachPage) - eachPage;
+			let to = (page * eachPage);
+			return  pagi.slice(from, to);
+		}
+	},
 }
 
 </script>
@@ -350,6 +391,19 @@ export default {
                 }
             }
         }
+
+        button.page-link {
+            display: inline-block;
+        }
+        button.page-link {
+            font-size: 20px;
+            color: #29b3ed;
+            font-weight: 500;
+        }
+        // .offset{
+        // width: 500px !important;
+        // margin: 20px auto;  
+        // }
 
         nav{
             display: flex;

@@ -24,7 +24,7 @@ const mutations = {
         state.user = user; 
         state.login = true;
 
-        ls.set('user', user, {ttl: 7200});
+        // ls.set('user', user, {ttl: 7200});
     },
 
     LOGIN(state){

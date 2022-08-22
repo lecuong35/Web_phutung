@@ -28,6 +28,7 @@
         "@fortawesome/fontawesome-svg-core": "^6.1.1",
         "@fortawesome/free-solid-svg-icons": "^6.1.1",
         "@fortawesome/vue-fontawesome": "^3.0.0-5",
+        "@ocrv/vue-tailwind-pagination": "^0.0.4",
         "chart.js": "^3.8.0",
         "jquery": "^3.6.0",
         "localstorage-slim": "^2.2.0",
@@ -37,6 +38,8 @@
         "vue-html2pdf": "^1.8.0",
         "vue-router": "^4.0.15",
         "vue3-html2pdf": "^1.1.2",
+        "vue3-pagination": "^1.0.16",
+        "vuejs-paginate": "^2.1.0",
         "vuex": "^4.0.2"
     }
 }

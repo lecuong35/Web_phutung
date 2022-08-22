@@ -18,42 +18,42 @@
                 <div class="container">
                   <h2>Các sản phẩm đã mua</h2>
                     <!--Table-->
-<table class="table table-hover table-fixed">
+                  <table class="table table-hover table-fixed">
 
-  <!--Table head-->
-  <thead>
-    <tr>
-      <th>Id</th>
-      <th>Ảnh sản phẩm</th>
-      <th>Tên sản phẩm</th>
-      <th>Giá sản phẩm</th>
-      <th>Số lượng</th>
-      <th>Trạng thái</th>
-    </tr>
-  </thead>
-  <!--Table head-->
+                    <!--Table head-->
+                    <thead>
+                      <tr>
+                        <th>Id</th>
+                        <th>Ảnh sản phẩm</th>
+                        <th>Tên sản phẩm</th>
+                        <th>Giá sản phẩm</th>
+                        <th>Số lượng</th>
+                        <th>Trạng thái</th>
+                      </tr>
+                    </thead>
+                    <!--Table head-->
 
-  <!--Table body-->
-  <tbody>
-    <tr v-for="cart in carts" :key="cart.id">
-      <th scope="row">{{cart.id}}</th>
-      <td style="width: fit-content;"><img :src="getImage(cart.image)" style="width: 150px; height: 150px"></td>
-      <td>
-           {{cart.name}}
-      </td>
-      <td>{{cart.price}}</td>
-      <td>
-        {{cart.quantity}}
-      </td>
-      <td>Đã đặt</td>
-    </tr>
-  </tbody>
-  <!--Table body-->
+                    <!--Table body-->
+                    <tbody>
+                      <tr v-for="cart in carts" :key="cart.id">
+                        <th scope="row">{{cart.id}}</th>
+                        <td style="width: fit-content;"><img :src="getImage(cart.image)" style="width: 150px; height: 150px"></td>
+                        <td>
+                            {{cart.name}}
+                        </td>
+                        <td>{{cart.price}}</td>
+                        <td>
+                          {{cart.quantity}}
+                        </td>
+                        <td>Đã đặt</td>
+                      </tr>
+                    </tbody>
+                    <!--Table body-->
 
-</table>
-<!--Table-->
+                  </table>
                 </div>
             </div>
+           
         </div>
     </div>
 </template>
@@ -90,7 +90,7 @@ export default {
     watch: {
       ...mapMutations({
          search: 'carts/SEARCH_CART_HISTORY'
-      })
+      }),
        
     },
 

@@ -31,7 +31,7 @@ class UserController extends Controller
 
         $user = auth()->user();
 
-        return response()->json($token);
+        return response()->json(['token' => $token, 'user' => $user]);
     }
 
     public function register(RegisterRequest $request) {

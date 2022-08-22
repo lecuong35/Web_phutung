@@ -49,14 +49,18 @@ export default {
     methods: {
        login(user) {
           baseUrl.userLogin('login',user).then((response) => {
-            var token = response.data;
-            ls.set('token_user', token, {ttl: 7200})
-            this.$store.dispatch('users/getUser')
+            var result = response.data;
+            const user = result.user;
+            ls.set('token_user', result.token, {ttl: 7200});
+            ls.set('user', user, {ttl: 7200});
+            // console.log(ls.get('user').id);
+            // this.$store.dispatch('users/getUser');
+            // // this.$store.commit('users/SET_USER', result.user);
             router.push({name: 'index'});
         }).catch((err) => {
             this.errors = err.response.data.errors;
-           console.log(this.errors)
-           window.alert("Sai tài khoản hoặc mật khẩu")
+           console.log(this.errors);
+           window.alert("Sai tài khoản hoặc mật khẩu");
         });
        }
     },
