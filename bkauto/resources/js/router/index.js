@@ -21,7 +21,7 @@ const routes = [
     {
         name: 'home',
         path: '/',
-        component: LoginUserVue,
+        component: IndexPageVue,
     },
     {
         name: 'admin',
